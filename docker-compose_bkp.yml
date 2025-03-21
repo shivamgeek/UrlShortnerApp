@@ -6,10 +6,12 @@ services:
     container_name: nginx_container_name
     ports:
       - "80:80"
-    # volumes:
-    #   - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - frontend_service
+      - backend1_service
+      - backend2_service
 
   frontend_service:
     build: ./frontend
