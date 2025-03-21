@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend1
+      - backend2
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    depends_on:
+      - backend1
+      - backend2
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Helpful in some Docker setups
+
+  backend1:
+    build: ./backend
+    container_name: backend1
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/urlshortener
+      - REDIS_URL=redis://cache:6379
+    depends_on:
+      - mongo
+      - cache
+
+  backend2:
+    build: ./backend
+    container_name: backend2
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/urlshortener
+      - REDIS_URL=redis://cache:6379
+    depends_on:
+      - mongo
+      - cache
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - mongo-data:/data/db
+
+  cache:
+    image: redis:latest
+    container_name: cache
+    restart: always
+
+volumes:
+  mongo-data:
