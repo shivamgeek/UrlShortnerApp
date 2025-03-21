@@ -16,11 +16,13 @@ services:
   frontend:
     build: ./frontend
     container_name: frontend
+    ports:
+      - "3000:3000"
     depends_on:
       - backend1
       - backend2
     environment:
-      - CHOKIDAR_USEPOLLING=true # Helpful in some Docker setups
+      - CHOKIDAR_USEPOLLING=true
 
   backend1:
     build: ./backend
@@ -52,6 +54,9 @@ services:
     image: redis:latest
     container_name: cache
     restart: always
+    volumes:
+      - redis-data:/data
 
 volumes:
   mongo-data:
+  redis-data:
