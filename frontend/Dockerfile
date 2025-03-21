@@ -9,5 +9,5 @@ RUN npm install
 # Copy the React app source
 COPY . .
 
-EXPOSE 3000
+EXPOSE 5173
 CMD ["npm", "run", "dev"]
