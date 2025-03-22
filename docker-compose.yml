@@ -41,21 +41,20 @@ services:
   #   depends_on:
   #     - mongo_service
   #     - cache_service
+#   mongo_service:
+#     image: mongo:latest
+#     container_name: mongo_container_name
+#     restart: always
+#     volumes:
+#       - mongo_volume:/data/db
 
-  mongo_service:
-    image: mongo:latest
-    container_name: mongo_container_name
-    restart: always
-    volumes:
-      - mongo_volume:/data/db
+#   cache_service:
+#     image: redis:latest
+#     container_name: cache_container_name
+#     restart: always
+#     volumes:
+#       - redis_volume:/data
 
-  cache_service:
-    image: redis:latest
-    container_name: cache_container_name
-    restart: always
-    volumes:
-      - redis_volume:/data
-
-volumes:
-  mongo_volume:
-  redis_volume:
+# volumes:
+#   mongo_volume:
+#   redis_volume:
