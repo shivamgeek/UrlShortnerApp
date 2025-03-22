@@ -15,7 +15,7 @@ services:
     build: ./frontend
     container_name: frontend_container_name
     ports:
-      - "5173:5173"
+      - "3000:3000"
     # depends_on:
     #   - backend1_service
     #   - backend2_service
