@@ -41,6 +41,12 @@ app.post("/api/shorten", async (req, res) => {
   res.json({ shortUrl });
 });
 
+// API: Get the last 10 shortened URLs (history)
+app.get("/api/history", async (req, res) => {
+  const urls = await URL.find().sort({ _id: -1 }).limit(10);
+  res.json(urls);
+});
+
 // API: Redirect from short URL to long URL
 app.get("/api/:shortUrl", async (req, res) => {
   const { shortUrl } = req.params;
@@ -60,12 +66,6 @@ app.get("/api/:shortUrl", async (req, res) => {
   // Cache the value and redirect
   await redisClient.setEx(shortUrl, 3600, urlEntry.longUrl);
   res.redirect(urlEntry.longUrl);
-});
-
-// API: Get the last 10 shortened URLs (history)
-app.get("/api/history", async (req, res) => {
-  const urls = await URL.find().sort({ _id: -1 }).limit(10);
-  res.json(urls);
 });
 
 app.listen(5000, () => console.log("Backend running on port 5000"));
