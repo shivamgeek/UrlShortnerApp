@@ -14,45 +14,45 @@ services:
   frontend_service:
     build: ./frontend
     container_name: frontend_container_name
-    # depends_on:
-    #   - backend1_service
-    #   - backend2_service
-    # environment:
-    #   - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend1_service
+      - backend2_service
+    environment:
+      - CHOKIDAR_USEPOLLING=true
 
-  # backend1_service:
-  #   build: ./backend
-  #   container_name: backend1_container_name
-  #   environment:
-  #     - MONGO_URL=mongodb://mongo_service:27017/urlshortener
-  #     - REDIS_URL=redis://cache_service:6379
-  #   depends_on:
-  #     - mongo_service
-  #     - cache_service
+  backend1_service:
+    build: ./backend
+    container_name: backend1_container_name
+    environment:
+      - MONGO_URL=mongodb://mongo_service:27017/urlshortener
+      - REDIS_URL=redis://cache_service:6379
+    depends_on:
+      - mongo_service
+      - cache_service
 
-  # backend2_service:
-  #   build: ./backend
-  #   container_name: backend2_container_name
-  #   environment:
-  #     - MONGO_URL=mongodb://mongo_service:27017/urlshortener
-  #     - REDIS_URL=redis://cache_service:6379
-  #   depends_on:
-  #     - mongo_service
-  #     - cache_service
-#   mongo_service:
-#     image: mongo:latest
-#     container_name: mongo_container_name
-#     restart: always
-#     volumes:
-#       - mongo_volume:/data/db
+  backend2_service:
+    build: ./backend
+    container_name: backend2_container_name
+    environment:
+      - MONGO_URL=mongodb://mongo_service:27017/urlshortener
+      - REDIS_URL=redis://cache_service:6379
+    depends_on:
+      - mongo_service
+      - cache_service
+  mongo_service:
+    image: mongo:latest
+    container_name: mongo_container_name
+    restart: always
+    volumes:
+      - mongo_volume:/data/db
 
-#   cache_service:
-#     image: redis:latest
-#     container_name: cache_container_name
-#     restart: always
-#     volumes:
-#       - redis_volume:/data
+  cache_service:
+    image: redis:latest
+    container_name: cache_container_name
+    restart: always
+    volumes:
+      - redis_volume:/data
 
-# volumes:
-#   mongo_volume:
-#   redis_volume:
+volumes:
+  mongo_volume:
+  redis_volume:
